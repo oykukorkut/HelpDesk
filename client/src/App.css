@@ -1,0 +1,35 @@
+/* App Genel Stilleri */
+.App {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Genel link stilleri */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Genel button stilleri */
+button {
+  font-family: inherit;
+}
+
+/* Genel input stilleri */
+input {
+  font-family: inherit;
+}
