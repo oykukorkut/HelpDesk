@@ -28,6 +28,31 @@ client/
 └── README.md         # Bu dosya
 ```
 
+## 📦 Bağımlılıklar
+
+Aşağıdaki paketlerin yüklü olması gerekmektedir:
+
+### Ana Bağımlılıklar
+- react
+- react-dom
+- react-router-dom
+
+### Geliştirme Bağımlılıkları
+- @eslint/js
+- @types/react
+- @types/react-dom
+- @vitejs/plugin-react
+- eslint
+- eslint-plugin-react-hooks
+- eslint-plugin-react-refresh
+- globals
+- vite
+
+Tüm bağımlılıkları yüklemek için:
+```bash
+npm install
+```
+
 ## 🛠️ Kurulum
 
 1. **Bağımlılıkları yükleyin:**

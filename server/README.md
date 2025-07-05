@@ -108,3 +108,17 @@ MySQL veritabanı kullanılmaktadır. Veritabanı bağlantısı `db.js` dosyası
 ## 📄 Lisans
 
 Bu proje MIT lisansı altında lisanslanmıştır.
+
+## 📦 Bağımlılıklar
+
+Aşağıdaki paketlerin yüklü olması gerekmektedir:
+
+- cors
+- dotenv
+- express
+- mysql2
+
+Tüm bağımlılıkları yüklemek için:
+```bash
+npm install
+```
