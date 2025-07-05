@@ -9,6 +9,7 @@ Bu proje, Help Desk uygulamasının frontend kısmını içerir. React ve Vite k
 - **JavaScript** - Programlama dili
 - **CSS** - Styling
 - **ESLint** - Code linting
+- **react-router-dom** - React uygulamalarında sayfa yönlendirme (routing) için kullanılır
 
 ## 📁 Proje Yapısı
 

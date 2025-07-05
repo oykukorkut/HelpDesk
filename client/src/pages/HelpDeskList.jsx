@@ -1,6 +1,7 @@
 import React from "react";
 import "./HelpDeskList.css";
 import addButton from "../assets/images/addButton.svg";
+import { useNavigate } from "react-router-dom";
 
 const SearchIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,6 +43,17 @@ const dummyTickets = [
     durum: "Beklemede",
     kategori: "Finans",
     birim: "Muhasebe"
+  },
+  {
+    konu: "Sunucu Bağlantı Hatası",
+    isim: "Zeynep Koç",
+    detay: "Sunucuya bağlanamıyorum.",
+    mail: "zeynep@mail.com",
+    tarih: "2024-06-04",
+    oncelik: "Yüksek",
+    durum: "Açık",
+    kategori: "Teknik",
+    birim: "Destek"
   }
 ];
 
@@ -63,83 +75,97 @@ const sortOptions = [
   { value: "priority-desc", label: "Öncelik (Yüksekten Düşüğe)" }
 ];
 
-const HelpDeskList = () => (
-  <div className="page-bg">
-    <div className="white-box">
-      <h1 className="center-title">Destek Talep İşlemleri</h1>
-      <div className="below-title-row">
-        <div className="new-request">
-          <img src={addButton} alt="Yeni Destek Talebi Oluştur" className="plus-icon" />
-          <span className="new-request-label">Yeni Destek Talebi oluşturma</span>
+const HelpDeskList = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="page-bg">
+      <div className="white-box">
+        <h1 className="center-title">Destek Talep İşlemleri</h1>
+        <div className="below-title-row">
+          <div className="new-request" onClick={() => navigate("/new-help-request")}
+            style={{ cursor: "pointer" }}>
+            <img src={addButton} alt="Yeni Destek Talebi Oluştur" className="plus-icon" />
+            <span className="new-request-label">Yeni Destek Talebi oluşturma</span>
+          </div>
         </div>
-      </div>
-      <div className="search-bar-row">
-        <input
-          type="text"
-          className="search-input"
-          placeholder="E-posta ile ara..."
-        />
-        <button className="search-btn">
-          <SearchIcon />
-          <span className="search-btn-text">Arama</span>
-        </button>
-      </div>
-      <div className="filter-row">
-        <select className="filter-dropdown">
-          {priorityOptions.map(opt => <option key={opt}>{opt}</option>)}
-        </select>
-        <select className="filter-dropdown">
-          {statusOptions.map(opt => <option key={opt}>{opt}</option>)}
-        </select>
-        <select className="filter-dropdown">
-          {categoryOptions.map(opt => <option key={opt}>{opt}</option>)}
-        </select>
-        <select className="filter-dropdown">
-          {unitOptions.map(opt => <option key={opt}>{opt}</option>)}
-        </select>
-        <div className="date-range-group">
-          <input type="date" className="date-input" />
-          <span className="date-range-separator">-</span>
-          <input type="date" className="date-input" />
+        <div className="search-bar-row">
+          <input
+            type="text"
+            className="search-input"
+            placeholder="E-posta ile ara..."
+          />
+          <button className="search-btn">
+            <SearchIcon />
+            <span className="search-btn-text">Arama</span>
+          </button>
         </div>
-        <select className="sort-dropdown">
-          {sortOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-        </select>
-      </div>
-      <div className="table-container">
-        <table className="support-table">
-          <thead>
-            <tr>
-              <th>Destek Konusu</th>
-              <th>Destek İsmi</th>
-              <th>Detay</th>
-              <th>Mail</th>
-              <th>Tarih</th>
-              <th className="priority-col">Öncelik</th>
-              <th>Durum</th>
-              <th>Kategori</th>
-              <th>Birim</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dummyTickets.map((ticket, idx) => (
-              <tr key={idx}>
-                <td>{ticket.konu}</td>
-                <td>{ticket.isim}</td>
-                <td>{ticket.detay}</td>
-                <td>{ticket.mail}</td>
-                <td>{ticket.tarih}</td>
-                <td className="priority-col"><PriorityBadge level={ticket.oncelik} /></td>
-                <td>{ticket.durum}</td>
-                <td>{ticket.kategori}</td>
-                <td>{ticket.birim}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="filter-labels-row">
+          <span className="filter-label">Öncelik</span>
+          <span className="filter-label">Durum</span>
+          <span className="filter-label">Kategori</span>
+          <span className="filter-label">Birim</span>
+          <span className="filter-label">Tarih Aralığı</span>
+          <span className="filter-label">Sıralama</span>
+        </div>
+        <div className="filter-row">
+          <select className="filter-dropdown">
+            {priorityOptions.map(opt => <option key={opt}>{opt}</option>)}
+          </select>
+          <select className="filter-dropdown">
+            {statusOptions.map(opt => <option key={opt}>{opt}</option>)}
+          </select>
+          <select className="filter-dropdown">
+            {categoryOptions.map(opt => <option key={opt}>{opt}</option>)}
+          </select>
+          <select className="filter-dropdown">
+            {unitOptions.map(opt => <option key={opt}>{opt}</option>)}
+          </select>
+          <div className="date-range-group">
+            <input type="date" className="date-input" />
+            <span className="date-range-separator">-</span>
+            <input type="date" className="date-input" />
+          </div>
+          <select className="sort-dropdown">
+            {sortOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
+          </select>
+        </div>
+        <div className="support-list-outer-container">
+          <div className="table-container">
+            <table className="support-table">
+              <thead>
+                <tr>
+                  <th>Destek Konusu</th>
+                  <th> Talep Sahibi (Ad Soyad)</th>
+                  <th>Detay</th>
+                  <th>Mail</th>
+                  <th>Tarih</th>
+                  <th className="priority-col">Öncelik</th>
+                  <th>Durum</th>
+                  <th>Kategori</th>
+                  <th>Birim</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dummyTickets.map((ticket, idx) => (
+                  <tr key={idx}>
+                    <td>{ticket.konu}</td>
+                    <td>{ticket.isim}</td>
+                    <td>{ticket.detay}</td>
+                    <td>{ticket.mail}</td>
+                    <td>{ticket.tarih}</td>
+                    <td className="priority-col"><PriorityBadge level={ticket.oncelik} /></td>
+                    <td>{ticket.durum}</td>
+                    <td>{ticket.kategori}</td>
+                    <td>{ticket.birim}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default HelpDeskList;
