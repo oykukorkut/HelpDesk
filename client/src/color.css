@@ -1,0 +1,30 @@
+/* Login ve tema renkleri */
+:root {
+  --primary-bg: #f5f6fa;
+  --primary-color: #2d3436;
+  --accent-color: #0984e3;
+  --input-bg: #ffffff;
+  --input-border: #dfe6e9;
+  --error-color: #d63031;
+  --success-color: #00b894;
+  /* Login sayfası için */
+  --login-gradient: linear-gradient(135deg, #0A2FA4 0%, #A100C8 100%);
+  --login-primary-dark: #0A2FA4;
+  --login-primary-purple: #A100C8;
+  --login-header-gradient: linear-gradient(135deg, #0A2FA4, #A100C8);
+  --login-header-dark: #333;
+  --login-label: #0A2FA4;
+  --login-link: #A100C8;
+  --login-link-hover: #0A2FA4;
+  --login-input-border: #e1e5e9;
+  --login-input-bg: #f8f9fa;
+  --login-input-focus: #A100C8;
+  --login-input-shadow: rgba(161, 0, 200, 0.08);
+  /* Soft renkler */
+  --soft-lila: #e6e0f8;
+  --soft-mavi: #dbeafe;
+  --soft-mor: #c7b8ea;
+  --soft-pembe: #f8e6f8;
+  --soft-gri: #f5f6fa;
+  --soft-acik-mavi: #e3e8f7;
+} 
