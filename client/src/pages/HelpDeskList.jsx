@@ -1,3 +1,4 @@
+// HelpDeskList.jsx
 import React from "react";
 import "./HelpDeskList.css";
 import addButton from "../assets/images/addButton.svg";
@@ -43,17 +44,6 @@ const dummyTickets = [
     durum: "Beklemede",
     kategori: "Finans",
     birim: "Muhasebe"
-  },
-  {
-    konu: "Sunucu Bağlantı Hatası",
-    isim: "Zeynep Koç",
-    detay: "Sunucuya bağlanamıyorum.",
-    mail: "zeynep@mail.com",
-    tarih: "2024-06-04",
-    oncelik: "Yüksek",
-    durum: "Açık",
-    kategori: "Teknik",
-    birim: "Destek"
   }
 ];
 
@@ -82,32 +72,27 @@ const HelpDeskList = () => {
       <div className="white-box">
         <h1 className="center-title">Destek Talep İşlemleri</h1>
         <div className="below-title-row">
-          <div className="new-request" onClick={() => navigate("/new-help-request")}
-            style={{ cursor: "pointer" }}>
+          <div className="new-request" onClick={() => navigate("/new-help-request")} style={{ cursor: "pointer" }}>
             <img src={addButton} alt="Yeni Destek Talebi Oluştur" className="plus-icon" />
             <span className="new-request-label">Yeni Destek Talebi oluşturma</span>
           </div>
         </div>
         <div className="search-bar-row">
-          <input
-            type="text"
-            className="search-input"
-            placeholder="E-posta ile ara..."
-          />
+          <input type="text" className="search-input" placeholder="E-posta ile ara..." />
           <button className="search-btn">
             <SearchIcon />
             <span className="search-btn-text">Arama</span>
           </button>
         </div>
-        <div className="filter-labels-row">
+
+        <div className="filter-section">
           <span className="filter-label">Öncelik</span>
           <span className="filter-label">Durum</span>
           <span className="filter-label">Kategori</span>
           <span className="filter-label">Birim</span>
           <span className="filter-label">Tarih Aralığı</span>
           <span className="filter-label">Sıralama</span>
-        </div>
-        <div className="filter-row">
+
           <select className="filter-dropdown">
             {priorityOptions.map(opt => <option key={opt}>{opt}</option>)}
           </select>
@@ -129,13 +114,14 @@ const HelpDeskList = () => {
             {sortOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
           </select>
         </div>
+
         <div className="support-list-outer-container">
           <div className="table-container">
             <table className="support-table">
               <thead>
                 <tr>
                   <th>Destek Konusu</th>
-                  <th> Talep Sahibi (Ad Soyad)</th>
+                  <th>Talep Sahibi (Ad Soyad)</th>
                   <th>Detay</th>
                   <th>Mail</th>
                   <th>Tarih</th>
