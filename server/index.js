@@ -4,7 +4,7 @@ const db = require('./db');
 const routes = require('./routes');
 
 const app = express();
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
@@ -62,6 +62,37 @@ app.get('/test', (req, res) => {
 // Ana endpoint
 app.get('/', (req, res) => {
   res.json({ message: 'Help Desk Backend API' });
+});
+
+// Yeni destek talebi oluşturma endpointi
+app.post('/api/help-requests', async (req, res) => {
+  const {
+    user_id,        // Giriş yapan kullanıcının id'si (frontend'den gönderilecek)
+    title,          // Destek konusu
+    description,    // Detay
+    email,          // Talep sahibi mail
+    priority,       // Öncelik
+    department,     // Birim
+    category,       // Kategori
+    status,         // Durum (örn: 'Açık' veya 'Beklemede')
+    request_date    // Talep tarihi
+  } = req.body;
+
+  if (!user_id || !title || !description || !email) {
+    return res.status(400).json({ success: false, message: 'Zorunlu alanlar eksik.' });
+  }
+
+  try {
+    const [result] = await db.query(
+      `INSERT INTO help_requests (user_id, title, description, email, priority, department, category, status, request_date, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`,
+      [user_id, title, description, email, priority, department, category, status, request_date]
+    );
+    res.json({ success: true, id: result.insertId });
+  } catch (err) {
+    console.error('HELP REQUEST ERROR:', err, err.stack);
+    res.status(500).json({ success: false, message: 'Sunucu hatası.' });
+  }
 });
 
 // Server başlatma

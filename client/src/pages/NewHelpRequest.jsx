@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./NewHelpRequest.css";
 
 const today = new Date().toISOString().split("T")[0];
@@ -23,6 +24,7 @@ const NewHelpRequest = () => {
     kategori: "",
   });
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -34,17 +36,55 @@ const NewHelpRequest = () => {
     if (!form.konu.trim()) newErrors.konu = "Destek konusu zorunlu";
     if (!form.isim.trim()) newErrors.isim = "Destek ismi zorunlu";
     if (!form.detay.trim()) newErrors.detay = "Detay zorunlu";
-    if (!/^([a-zA-Z0-9._%+-]+)@tachmax\.com\.tr$/.test(form.mail)) newErrors.mail = "Sadece @tachmax.com.tr mail adresi kabul edilir";
+    if (!/^([a-zA-Z0-9._%+-]+)@techmax\.com\.tr$/.test(form.mail)) newErrors.mail = "Sadece @techmax.com.tr mail adresi kabul edilir";
     if (!form.tarih || form.tarih < today) newErrors.tarih = "Bugün veya sonrası bir tarih seçin";
     return newErrors;
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    console.log('Form submit edildi!');
     const newErrors = validate();
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      alert("Destek talebiniz kaydedildi!");
+      const user = JSON.parse(localStorage.getItem('user'));
+      console.log('POST isteği atılıyor:', {
+        user_id: user?.id,
+        title: form.konu,
+        description: form.detay,
+        email: form.mail,
+        priority: form.oncelik,
+        department: form.birim,
+        category: form.kategori,
+        status: 'Açık',
+        request_date: form.tarih
+      });
+      try {
+        const response = await fetch('http://localhost:5000/api/help-requests', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user_id: user?.id,
+            title: form.konu,
+            description: form.detay,
+            email: form.mail,
+            priority: form.oncelik,
+            department: form.birim,
+            category: form.kategori,
+            status: 'Açık',
+            request_date: form.tarih
+          })
+        });
+        const data = await response.json();
+        if (data.success) {
+          alert('Destek talebiniz kaydedildi!');
+          navigate('/helprequests');
+        } else {
+          alert(data.message || 'Bir hata oluştu.');
+        }
+      } catch (err) {
+        alert('Sunucuya bağlanılamadı.');
+      }
     }
   };
 
@@ -52,95 +92,97 @@ const NewHelpRequest = () => {
     <div className="page-bg">
       <div className="white-box">
         <h1 className="center-title">Destek Talebi Oluştur</h1>
-        <div className="form-wrapper">
-          <form className="help-form left-form" onSubmit={handleSubmit}>
-            <div className="form-row">
-              <label>Destek Konusu</label>
-              <input type="text" name="konu" value={form.konu} onChange={handleChange} className={`input-box${errors.konu ? " input-error" : ""}`} />
-              {errors.konu && <span className="error-text">{errors.konu}</span>}
+        <form onSubmit={handleSubmit}>
+          <div className="form-wrapper">
+            <div className="help-form left-form">
+              <div className="form-row">
+                <label>Destek Konusu</label>
+                <input type="text" name="konu" value={form.konu} onChange={handleChange} className={`input-box${errors.konu ? " input-error" : ""}`} />
+                {errors.konu && <span className="error-text">{errors.konu}</span>}
+              </div>
+              <div className="form-row">
+                <label> Talep Sahibi (Ad Soyad)</label>
+                <input type="text" name="isim" value={form.isim} onChange={handleChange} className={`input-box${errors.isim ? " input-error" : ""}`} />
+                {errors.isim && <span className="error-text">{errors.isim}</span>}
+              </div>
+              <div className="form-row">
+                <label>Detay</label>
+                <textarea name="detay" value={form.detay} onChange={handleChange} rows={4} className={`input-box${errors.detay ? " input-error" : ""}`} />
+                {errors.detay && <span className="error-text">{errors.detay}</span>}
+              </div>
+              <div className="form-row">
+                <label>Mail</label>
+                <input type="email" name="mail" value={form.mail} onChange={handleChange} className={`input-box${errors.mail ? " input-error" : ""}`} />
+                {errors.mail && <span className="error-text">{errors.mail}</span>}
+              </div>
             </div>
-            <div className="form-row">
-              <label> Talep Sahibi (Ad Soyad)</label>
-              <input type="text" name="isim" value={form.isim} onChange={handleChange} className={`input-box${errors.isim ? " input-error" : ""}`} />
-              {errors.isim && <span className="error-text">{errors.isim}</span>}
-            </div>
-            <div className="form-row">
-              <label>Detay</label>
-              <textarea name="detay" value={form.detay} onChange={handleChange} rows={4} className={`input-box${errors.detay ? " input-error" : ""}`} />
-              {errors.detay && <span className="error-text">{errors.detay}</span>}
-            </div>
-            <div className="form-row">
-              <label>Mail</label>
-              <input type="email" name="mail" value={form.mail} onChange={handleChange} className={`input-box${errors.mail ? " input-error" : ""}`} />
-              {errors.mail && <span className="error-text">{errors.mail}</span>}
-            </div>
-          </form>
-          <div className="right-date-container">
-            <div className="form-row">
-              <label>Tarih</label>
-              <input type="date" name="tarih" value={form.tarih} onChange={handleChange} min={today} className={`input-box${errors.tarih ? " input-error" : ""}`} />
-              {errors.tarih && <span className="error-text">{errors.tarih}</span>}
-            </div>
-            <div className="form-row">
-              <label>Öncelik</label>
-              <select name="oncelik" value={form.oncelik} onChange={handleChange} className="input-box">
-                <option value="">Seçiniz</option>
-                <option value="Yüksek">Yüksek</option>
-                <option value="Orta">Orta</option>
-                <option value="Düşük">Düşük</option>
-              </select>
-            </div>
-            <div className="form-row">
-              <label>Birim</label>
-              <select name="birim" value={form.birim} onChange={handleChange} className="input-box">
-                <option value="">Seçiniz</option>
-                <option>Bilgi Teknolojileri (BT)</option>
-                <option>İnsan Kaynakları</option>
-                <option>Muhasebe</option>
-                <option>Satın Alma</option>
-                <option>Pazarlama</option>
-                <option>Satış</option>
-                <option>Operasyon</option>
-                <option>Lojistik</option>
-                <option>Hukuk</option>
-                <option>Yönetim</option>
-                <option>Teknik Servis</option>
-                <option>Üretim</option>
-                <option>Finans</option>
-                <option>İdari İşler</option>
-                <option>Müşteri Hizmetleri</option>
-                <option>AR-GE</option>
-                <option>Çağrı Merkezi</option>
-                <option>Diğer</option>
-              </select>
-            </div>
-            <div className="form-row">
-              <label>Kategori</label>
-              <select name="kategori" value={form.kategori || ""} onChange={handleChange} className="input-box">
-                <option value="">Seçiniz</option>
-                <option>Donanım</option>
-                <option>Yazılım</option>
-                <option>Ağ / İnternet</option>
-                <option>Erişim / Yetkilendirme</option>
-                <option>Hesap / Şifre</option>
-                <option>Fatura / Muhasebe</option>
-                <option>İnsan Kaynakları</option>
-                <option>Satın Alma</option>
-                <option>Teknik Destek</option>
-                <option>Sistem Arızası</option>
-                <option>Güncelleme Talebi</option>
-                <option>Envanter Talebi</option>
-                <option>Güvenlik</option>
-                <option>Eğitim / Destek</option>
-                <option>Diğer</option>
-              </select>
-            </div>
-            <div className="form-actions">
-              <button type="submit" className="save-btn">Kaydet</button>
-              <button type="button" className="cancel-btn" onClick={() => window.history.back()}>İptal</button>
+            <div className="right-date-container">
+              <div className="form-row">
+                <label>Tarih</label>
+                <input type="date" name="tarih" value={form.tarih} onChange={handleChange} min={today} className={`input-box${errors.tarih ? " input-error" : ""}`} />
+                {errors.tarih && <span className="error-text">{errors.tarih}</span>}
+              </div>
+              <div className="form-row">
+                <label>Öncelik</label>
+                <select name="oncelik" value={form.oncelik} onChange={handleChange} className="input-box">
+                  <option value="">Seçiniz</option>
+                  <option value="Yüksek">Yüksek</option>
+                  <option value="Orta">Orta</option>
+                  <option value="Düşük">Düşük</option>
+                </select>
+              </div>
+              <div className="form-row">
+                <label>Birim</label>
+                <select name="birim" value={form.birim} onChange={handleChange} className="input-box">
+                  <option value="">Seçiniz</option>
+                  <option>Bilgi Teknolojileri (BT)</option>
+                  <option>İnsan Kaynakları</option>
+                  <option>Muhasebe</option>
+                  <option>Satın Alma</option>
+                  <option>Pazarlama</option>
+                  <option>Satış</option>
+                  <option>Operasyon</option>
+                  <option>Lojistik</option>
+                  <option>Hukuk</option>
+                  <option>Yönetim</option>
+                  <option>Teknik Servis</option>
+                  <option>Üretim</option>
+                  <option>Finans</option>
+                  <option>İdari İşler</option>
+                  <option>Müşteri Hizmetleri</option>
+                  <option>AR-GE</option>
+                  <option>Çağrı Merkezi</option>
+                  <option>Diğer</option>
+                </select>
+              </div>
+              <div className="form-row">
+                <label>Kategori</label>
+                <select name="kategori" value={form.kategori || ""} onChange={handleChange} className="input-box">
+                  <option value="">Seçiniz</option>
+                  <option>Donanım</option>
+                  <option>Yazılım</option>
+                  <option>Ağ / İnternet</option>
+                  <option>Erişim / Yetkilendirme</option>
+                  <option>Hesap / Şifre</option>
+                  <option>Fatura / Muhasebe</option>
+                  <option>İnsan Kaynakları</option>
+                  <option>Satın Alma</option>
+                  <option>Teknik Destek</option>
+                  <option>Sistem Arızası</option>
+                  <option>Güncelleme Talebi</option>
+                  <option>Envanter Talebi</option>
+                  <option>Güvenlik</option>
+                  <option>Eğitim / Destek</option>
+                  <option>Diğer</option>
+                </select>
+              </div>
+              <div className="form-actions">
+                <button type="submit" className="save-btn">Kaydet</button>
+                <button type="button" className="cancel-btn" onClick={() => window.history.back()}>İptal</button>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
