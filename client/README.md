@@ -2,7 +2,7 @@
 
 Bu proje, Help Desk uygulamasının frontend kısmını içerir. React ve Vite kullanılarak geliştirilmiştir.
 
-## 🚀 Teknolojiler
+## Teknolojiler
 
 - **React 18** - JavaScript kütüphanesi
 - **Vite** - Build tool ve development server
@@ -11,7 +11,7 @@ Bu proje, Help Desk uygulamasının frontend kısmını içerir. React ve Vite k
 - **ESLint** - Code linting
 - **react-router-dom** - React uygulamalarında sayfa yönlendirme (routing) için kullanılır
 
-## 📁 Proje Yapısı
+## Proje Yapısı
 
 ```
 client/
@@ -28,7 +28,7 @@ client/
 └── README.md         # Bu dosya
 ```
 
-## 📦 Bağımlılıklar
+## Bağımlılıklar
 
 Aşağıdaki paketlerin yüklü olması gerekmektedir:
 
@@ -53,7 +53,7 @@ Tüm bağımlılıkları yüklemek için:
 npm install
 ```
 
-## 🛠️ Kurulum
+## Kurulum
 
 1. **Bağımlılıkları yükleyin:**
    ```bash
@@ -70,13 +70,13 @@ npm install
    http://localhost:5173
    ```
 
-## 📡 API Bağlantısı
+## API Bağlantısı
 
 Frontend, backend API'sine bağlanır:
 - **Backend URL:** `http://localhost:5000`
 - **API Base URL:** `http://localhost:5000/api`
 
-## 🔧 Geliştirme
+## Geliştirme
 
 ### Development Server
 
@@ -102,32 +102,28 @@ npm run preview
 npm run lint
 ```
 
-## 🎨 Styling
+## Styling
 
 - **CSS** - Temel styling
 - **Responsive Design** - Mobil uyumlu tasarım
 - **Modern UI/UX** - Kullanıcı dostu arayüz
 
-## 📱 Özellikler
+## Özellikler
 
 - **React Hooks** - Modern React özellikleri
 - **Component-based Architecture** - Modüler yapı
 - **Fast Refresh** - Hızlı geliştirme deneyimi
 - **ESLint** - Kod kalitesi
 
-## 🔒 Güvenlik
 
-- **CORS** - Backend ile güvenli iletişim
-- **Environment Variables** - Hassas bilgilerin korunması
-
-## 📝 Notlar
+## Notlar
 
 - Vite ile hızlı development deneyimi
 - Hot Module Replacement (HMR) aktif
 - Modern JavaScript özellikleri kullanılıyor
 - Component-based yapı ile modüler geliştirme
 
-## 🚀 Deployment
+## Deployment
 
 ### Production Build
 
@@ -145,7 +141,7 @@ Build edilen dosyalar herhangi bir static hosting servisinde yayınlanabilir:
 - GitHub Pages
 - AWS S3
 
-## 🤝 Katkıda Bulunma
+## Katkıda Bulunma
 
 1. Fork yapın
 2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
@@ -153,30 +149,30 @@ Build edilen dosyalar herhangi bir static hosting servisinde yayınlanabilir:
 4. Push yapın (`git push origin feature/amazing-feature`)
 5. Pull Request oluşturun
 
-## 📄 Lisans
+## Lisans
 
 Bu proje MIT lisansı altında lisanslanmıştır.
 
-## 🔗 Bağlantılar
+## Bağlantılar
 
 - [React Documentation](https://reactjs.org/)
 - [Vite Documentation](https://vitejs.dev/)
 - [Backend API](../server/README.md)
 
-## 🖥️ Giriş Ekranı Özellikleri
+## Giriş Ekranı Özellikleri
 
 - Sadece e-posta ve şifre ile giriş yapılır.
 - Kullanıcı kaydı ve kontrolü doğrudan veritabanı üzerinden yapılır.
 - Mobil uyumlu ve responsive tasarım korunur.
 
-## 🎨 Styling (Güncel)
+## Styling (Güncel)
 
 - **Arka Plan:** linear-gradient(135deg, #0A2FA4 0%, #A100C8 100%)
 - **Başlık ve butonlarda:** aynı gradient renkleri
 - **Label ve link renkleri:** #0A2FA4 ve #A100C8
 - **Sade ve modern UI**
 
-## 📱 Özellikler (Güncel)
+## Özellikler (Güncel)
 
 - Sadece giriş (login) ekranı vardır
 - Tüm kontroller backend/veritabanı üzerinden yapılır

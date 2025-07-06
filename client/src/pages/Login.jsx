@@ -30,7 +30,7 @@ const Login = () => {
     setIsLoading(true);
     setError('');
     try {
-      const response = await fetch('http://localhost:5050/api/login', {
+      const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +44,13 @@ const Login = () => {
       const data = await response.json();
       if (data.success) {
         setIsLoading(false);
-        navigate('/helprequests');
+        if (role === 'musteri') {
+          navigate('/helprequests');
+        } else if (role === 'personel' || role === 'destek') {
+          navigate('/helpdesklist');
+        } else {
+          navigate('/');
+        }
       } else {
         setError(data.message || 'Giriş başarısız.');
         setIsLoading(false);
@@ -74,8 +80,8 @@ const Login = () => {
             </button>
             <button
               type="button"
-              className={role === 'destek' ? 'role-btn selected small' : 'role-btn small'}
-              onClick={() => setRole('destek')}
+              className={role === 'personel' ? 'role-btn selected small' : 'role-btn small'}
+              onClick={() => setRole('personel')}
             >
               Destek Personeli
             </button>
