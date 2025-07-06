@@ -1,5 +1,5 @@
 // HelpDeskList.jsx
-import React from "react";
+import React, { useState } from "react";
 import "./HelpDeskList.css";
 import addButton from "../assets/images/addButton.svg";
 import { useNavigate } from "react-router-dom";
@@ -57,26 +57,73 @@ const PriorityBadge = ({ level }) => {
 
 const priorityOptions = ["Tümü", "Yüksek", "Orta", "Düşük"];
 const statusOptions = ["Tümü", "Açık", "Çözüldü", "Beklemede"];
-const categoryOptions = ["Tümü", "Teknik", "Hesap", "Finans"];
-const unitOptions = ["Tümü", "Destek", "Müşteri Hizmetleri", "Muhasebe"];
+const categoryOptions = [
+  "Tümü",
+  "Donanım", "Yazılım", "Ağ / İnternet", "Erişim / Yetkilendirme", "Hesap / Şifre", "Fatura / Muhasebe", "İnsan Kaynakları", "Satın Alma", "Teknik Destek", "Sistem Arızası", "Güncelleme Talebi", "Envanter Talebi", "Güvenlik", "Eğitim / Destek", "Diğer"
+];
+const unitOptions = [
+  "Tümü",
+  "Bilgi Teknolojileri (BT)", "İnsan Kaynakları", "Muhasebe", "Satın Alma", "Pazarlama", "Satış", "Operasyon", "Lojistik", "Hukuk", "Yönetim", "Teknik Servis", "Üretim", "Finans", "İdari İşler", "Müşteri Hizmetleri", "AR-GE", "Çağrı Merkezi", "Diğer"
+];
 const sortOptions = [
   { value: "date-asc", label: "Tarihe Göre (Artan)" },
   { value: "date-desc", label: "Tarihe Göre (Azalan)" },
   { value: "priority-desc", label: "Öncelik (Yüksekten Düşüğe)" }
 ];
 
+const TicketModal = ({ ticket, onClose, onSave }) => {
+  const [priority, setPriority] = useState(ticket?.oncelik || "");
+  const [status, setStatus] = useState(ticket?.durum || "");
+  if (!ticket) return null;
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <div className="modal-header">
+          <h2>Destek Talebi Detayı</h2>
+          <button className="modal-close" onClick={onClose}>×</button>
+        </div>
+        <div className="modal-details">
+          <p><b>Konu:</b> {ticket.konu}</p>
+          <p><b>Talep Sahibi:</b> {ticket.isim}</p>
+          <p><b>Detay:</b> {ticket.detay}</p>
+          <p><b>Mail:</b> {ticket.mail}</p>
+          <p><b>Tarih:</b> {ticket.tarih}</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <b>Öncelik:</b>
+            <select value={priority} onChange={e => setPriority(e.target.value)} style={{ fontWeight: 600, borderRadius: 8, padding: '4px 12px', border: '1.5px solid #e0e4ea', color: '#222' }}>
+              <option value="Yüksek">Yüksek</option>
+              <option value="Orta">Orta</option>
+              <option value="Düşük">Düşük</option>
+            </select>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
+            <b>Durum:</b>
+            <select value={status} onChange={e => setStatus(e.target.value)} style={{ fontWeight: 600, borderRadius: 8, padding: '4px 12px', border: '1.5px solid #e0e4ea', color: '#222' }}>
+              <option value="Açık">Açık</option>
+              <option value="Çözüldü">Çözüldü</option>
+              <option value="Beklemede">Beklemede</option>
+            </select>
+          </div>
+          <p><b>Kategori:</b> {ticket.kategori}</p>
+          <p><b>Birim:</b> {ticket.birim}</p>
+        </div>
+        <button className="modal-save-btn" onClick={() => onSave(priority, status)} style={{ marginTop: 18, padding: '10px 28px', background: '#0A2FA4', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 600, fontSize: '1rem', cursor: 'pointer' }}>Kaydet</button>
+      </div>
+    </div>
+  );
+};
+
 const HelpDeskList = () => {
   const navigate = useNavigate();
+  const [selectedTicket, setSelectedTicket] = useState(null);
+  const handleSave = (priority, status) => {
+    alert(`Yeni Öncelik: ${priority}\nYeni Durum: ${status}`);
+    setSelectedTicket(null);
+  };
   return (
     <div className="page-bg">
       <div className="white-box">
-        <h1 className="center-title">Destek Talep İşlemleri</h1>
-        <div className="below-title-row">
-          <div className="new-request" onClick={() => navigate("/new-help-request")} style={{ cursor: "pointer" }}>
-            <img src={addButton} alt="Yeni Destek Talebi Oluştur" className="plus-icon" />
-            <span className="new-request-label">Yeni Destek Talebi oluşturma</span>
-          </div>
-        </div>
+        <h1 className="center-title">Destek Talep Listesi</h1>
         <div className="search-bar-row">
           <input type="text" className="search-input" placeholder="E-posta ile ara..." />
           <button className="search-btn">
@@ -133,7 +180,7 @@ const HelpDeskList = () => {
               </thead>
               <tbody>
                 {dummyTickets.map((ticket, idx) => (
-                  <tr key={idx}>
+                  <tr key={idx} onClick={() => setSelectedTicket(ticket)} style={{ cursor: "pointer" }}>
                     <td>{ticket.konu}</td>
                     <td>{ticket.isim}</td>
                     <td>{ticket.detay}</td>
@@ -149,6 +196,7 @@ const HelpDeskList = () => {
             </table>
           </div>
         </div>
+        <TicketModal ticket={selectedTicket} onClose={() => setSelectedTicket(null)} onSave={handleSave} />
       </div>
     </div>
   );
