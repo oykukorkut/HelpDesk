@@ -111,6 +111,43 @@ body, html, #root, .App {
   color: #999;
 }
 
+/* Password input container ve toggle button stilleri */
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-container input {
+  width: 100%;
+  padding-right: 50px;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  color: #666;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle-btn:hover {
+  color: #A100C8;
+}
+
+.password-toggle-btn:focus {
+  outline: none;
+  color: #A100C8;
+}
+
 .form-options {
   display: flex;
   justify-content: space-between;
