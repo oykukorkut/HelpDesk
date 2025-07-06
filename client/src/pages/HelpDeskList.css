@@ -21,11 +21,13 @@ body, html, #root {
   min-height: 80%;
   max-width: 1400px;
   margin: 32px auto;
-  padding: 28px 24px 28px 24px;
+  padding: 28px 24px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  border-radius: 16px; /* Burayı düzelttik */
 }
+
 
 .center-title {
   text-align: center;
@@ -33,6 +35,12 @@ body, html, #root {
   font-weight: bold;
   color: #222;
   margin-bottom: 12px;
+  /* Gradient text efekti */
+  background: linear-gradient(135deg, #0A2FA4, #A100C8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: #222; /* Fallback renk */
 }
 
 .below-title-row {
@@ -118,8 +126,6 @@ body, html, #root {
   font-weight: 500;
 }
 
-
-
 .filter-section {
   display: grid;
   grid-template-columns: repeat(6, minmax(100px, 1fr));
@@ -140,7 +146,6 @@ body, html, #root {
 .filter-section .sort-dropdown {
   width: 100%;
 }
-
 
 .filter-label:nth-child(4),
 .filter-label:nth-child(5),
@@ -515,4 +520,168 @@ body, html, #root {
   margin: 0;
   background: none;
   border: none;
+}
+
+.help-requests-box {
+  border-radius: 32px;
+  max-width: 700px;
+  min-width: 400px;
+  min-height: 500px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .help-requests-box {
+    max-width: 98vw;
+    min-width: unset;
+    padding: 24px 8px;
+    min-height: 320px;
+  }
+}
+
+.new-help-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #7e57c2;
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 24px 8px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(126,87,194,0.08);
+  margin: 32px auto 0 auto;
+}
+
+.new-help-btn:hover {
+  background: #5e35b1;
+  box-shadow: 0 8px 24px rgba(94,53,177,0.16);
+}
+
+.plus-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border-radius: 50%;
+}
+
+.new-help-btn-text {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+}
+
+/* Modal (pop-up) stilleri */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(44, 62, 80, 0.45);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+  padding: 32px 28px 24px 28px;
+  min-width: 320px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalPop 0.25s cubic-bezier(.4,1.6,.6,1) both;
+}
+@keyframes modalPop {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.modal-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  text-align: left;
+  padding-right: 0;
+}
+.modal-close {
+  position: static;
+  margin-left: 18px;
+  top: auto;
+  right: auto;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #A100C8;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+.modal-close:hover {
+  color: #222;
+  background: none;
+}
+.modal-details p {
+  margin: 10px 0;
+  font-size: 1.08rem;
+  color: #222;
+}
+.modal-details b {
+  color: #0A2FA4;
+}
+.modal-details select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #fff;
+  border: 1.5px solid #e0e4ea;
+  border-radius: 8px;
+  padding: 8px 32px 8px 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0A2FA4;
+  box-shadow: 0 2px 8px rgba(10,47,164,0.06);
+  transition: border 0.2s, box-shadow 0.2s;
+  outline: none;
+  margin-left: 6px;
+  margin-right: 6px;
+  cursor: pointer;
+  min-width: 130px;
+  max-width: 220px;
+  width: auto;
+  box-sizing: border-box;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 18px 18px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.modal-details select:focus {
+  border-color: #A100C8;
+  box-shadow: 0 0 0 2px rgba(161,0,200,0.08);
 }
