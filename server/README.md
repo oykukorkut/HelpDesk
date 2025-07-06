@@ -2,7 +2,7 @@
 
 Bu proje, Help Desk uygulamasının backend API'sini içerir. Node.js ve Express.js kullanılarak geliştirilmiştir.
 
-## 🚀 Teknolojiler
+## Teknolojiler
 
 - **Node.js** - JavaScript runtime
 - **Express.js** - Web framework
@@ -11,7 +11,7 @@ Bu proje, Help Desk uygulamasının backend API'sini içerir. Node.js ve Express
 - **CORS** - Cross-origin resource sharing
 - **dotenv** - Environment variables
 
-## 📁 Proje Yapısı
+## Proje Yapısı
 
 ```
 server/
@@ -25,7 +25,7 @@ server/
 └── README.md         # Bu dosya
 ```
 
-## 🛠️ Kurulum
+## Kurulum
 
 1. **Bağımlılıkları yükleyin:**
    ```bash
@@ -34,7 +34,7 @@ server/
 
 2. **Environment dosyası oluşturun:**
    ```bash
-   cp .env.example .env
+   cp env.example .env
    ```
 
 3. **Environment değişkenlerini ayarlayın:**
@@ -42,8 +42,8 @@ server/
    PORT=5000
    DB_HOST=localhost
    DB_USER=root
-   DB_PASSWORD=your_password
-   DB_NAME=helpdesk_db
+   DB_PASSWORD=your_mysql_password
+   DB_NAME=helpdesk
    DB_PORT=3306
    ```
 
@@ -52,7 +52,7 @@ server/
    npm start
    ```
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### Ana Endpoint'ler
 
@@ -60,7 +60,7 @@ server/
 - `GET /api` - API ana sayfası
 - `GET /api/test` - Test endpoint'i
 
-## 🔧 Geliştirme
+## Geliştirme
 
 ### Server'ı Geliştirme Modunda Çalıştırma
 
@@ -74,7 +74,7 @@ npm run dev
 npm run build
 ```
 
-## 📊 Veritabanı
+## Veritabanı
 
 MySQL veritabanı kullanılmaktadır. Veritabanı bağlantısı `db.js` dosyasında yapılandırılmıştır.
 
@@ -84,20 +84,20 @@ MySQL veritabanı kullanılmaktadır. Veritabanı bağlantısı `db.js` dosyası
 - **Port:** `3306` (varsayılan)
 - **Database:** `helpdesk_db` (varsayılan)
 
-## 🔒 Güvenlik
+## Güvenlik
 
 - CORS middleware aktif
 - Environment variables kullanımı
 - SQL injection koruması (mysql2)
 
-## 📝 Notlar
+## Notlar
 
 - Tüm API endpoint'leri `/api` prefix'i ile başlar
 - Route'lar `routes/` klasöründe organize edilmiştir
 - Controller'lar `controllers/` klasöründe bulunur
 - Veritabanı bağlantısı ayrı bir modülde yönetilir
 
-## 🤝 Katkıda Bulunma
+## Katkıda Bulunma
 
 1. Fork yapın
 2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
@@ -105,11 +105,11 @@ MySQL veritabanı kullanılmaktadır. Veritabanı bağlantısı `db.js` dosyası
 4. Push yapın (`git push origin feature/amazing-feature`)
 5. Pull Request oluşturun
 
-## 📄 Lisans
+## Lisans
 
 Bu proje MIT lisansı altında lisanslanmıştır.
 
-## 📦 Bağımlılıklar
+## Bağımlılıklar
 
 Aşağıdaki paketlerin yüklü olması gerekmektedir:
 

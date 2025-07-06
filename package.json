@@ -1,5 +1,24 @@
 {
-  "dependencies": {
-    "react-router-dom": "^7.6.3"
+  "name": "helpdesk",
+  "version": "1.0.0",
+  "description": "Help Desk Uygulaması - React Frontend ve Node.js Backend",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "npm install && cd client && npm install && cd ../server && npm install",
+    "dev": "concurrently \"cd server && npm start\" \"cd client && npm run dev\"",
+    "start": "cd server && npm start",
+    "build": "cd client && npm run build"
+  },
+  "keywords": [
+    "helpdesk",
+    "react",
+    "nodejs",
+    "express",
+    "mysql"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
